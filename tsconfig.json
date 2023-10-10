@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "es2022",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true
+  },
+  "include": ["./src/**/*", "types/*"],
+  "files": ["types/express.d.ts"]
+}
