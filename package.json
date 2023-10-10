@@ -7,7 +7,9 @@
     "start": "node ./dist/app.js",
     "lint": "eslint . --ext .yaml --ext .js --fix",
     "build-ts": "tsc",
-    "build-docs": "tsoa spec && tsoa routes",
+    "build-docs": "tsoa spec",
+    "build-routes": "tsoa routes",
+    "build-tsoa": "tsoa spec && tsoa routes",
     "build": "tsoa spec && tsoa routes && tsc"
   },
   "author": "Abdulraheem A omeiza",
@@ -15,14 +17,18 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-basic-auth": "^1.2.1",
+    "jest": "^29.7.0",
     "json-bigint": "^1.0.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.3.1",
+    "supertest": "^6.3.3",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "tsoa": "^5.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -30,7 +36,6 @@
     "@types/swagger-ui-express": "^4.1.3",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "tsoa": "^5.0.0"
+    "eslint-plugin-import": "^2.26.0"
   }
 }

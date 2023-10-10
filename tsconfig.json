@@ -10,5 +10,4 @@
     "inlineSourceMap": true
   },
   "include": ["./src/**/*", "types/*"],
-  "files": ["types/express.d.ts"]
 }
