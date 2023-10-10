@@ -1,0 +1,36 @@
+{
+  "name": "calculator_server",
+  "version": "1.0.0",
+  "description": "A simple server for a calculator app written in typescript",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node ./dist/app.js",
+    "lint": "eslint . --ext .yaml --ext .js --fix",
+    "build-ts": "tsc",
+    "build-docs": "tsoa spec && tsoa routes",
+    "build": "tsoa spec && tsoa routes && tsc"
+  },
+  "author": "Abdulraheem A omeiza",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-basic-auth": "^1.2.1",
+    "json-bigint": "^1.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.3.1",
+    "swagger-jsdoc": "^6.2.1",
+    "swagger-ui-express": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/swagger-ui-express": "^4.1.3",
+    "eslint": "^8.14.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "tsoa": "^5.0.0"
+  }
+}
