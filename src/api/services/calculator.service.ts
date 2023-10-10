@@ -14,6 +14,33 @@ class CalculatorService {
     }
   }
 
+  // get all history
+  async GetHistory() {
+    try {
+
+      return await calculatorModel.find()
+    } catch (err: any) {
+      throw ({ message: failedToFecthHistory, error: err, status: 404 })
+    }
+  }
+
+  // get a users calculation history
+  async GetHistoryByUser(userId: string) {
+    try {
+      return await calculatorModel.find({ userId })
+    } catch (err: any) {
+      throw ({ message: failedToFecthHistory, error: err, status: 404 })
+    }
+  }
+
+  // get a limited number of users calculation history
+  async GetSomeHistory(limit: number, skip: number) {
+    try {
+      return await calculatorModel.find().limit(limit).skip(skip || 0)
+    } catch (err: any) {
+      throw ({ message: failedToFecthHistory, error: err, status: 404 })
+    }
+  }
 };
 
 export default new CalculatorService();

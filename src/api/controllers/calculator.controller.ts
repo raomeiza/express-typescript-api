@@ -56,6 +56,94 @@ export class calculatorController extends Controller {
     }
   }
 
+  /**
+   * @function getHistory - Get all calculations
+   * @implements - calculatorService.GetHistory
+   * @return {Promise<object>} - calculations jsoned object
+   */
+  @Example({})
+  @Get('get-history')
+  @Example<FetchResponse>(fetchResponse)
+  @Response(201, 'history fetched successfully')
+  public async getHistory(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Request() req: any,
+  ): Promise<any> {
+    try {
+      let token = req.headers.authorization
+      const user = await tokenizer.verifyToken(token)
+      if (!user) throw ({ message: 'User not authorized', status: 401 })
+
+      const history = await calculatorService.GetHistory()
+
+      token = await tokenizer.signToken(token) // refresh token
+      return sendSuccess({ history, token }, 'history fetched successfully')
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
+
+  /**
+   * @function getHistoryByUser - Get a users calculations
+   * @implements - calculatorService.GetHistoryByUser
+   * @param userId - user id
+   * @return {Promise<object>} - calculations jsoned object
+   */
+  @Example({ userId: '6142b4a3b0d7f4f8a7f8b7f6' })
+  @Get('get-history-by-user')
+  @Example<FetchResponse>(fetchResponse)
+  @Response(201, 'history fetched successfully')
+  public async getHistoryByUser(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Request() req: any,
+    @Query() userId: string
+  ): Promise<any> {
+    try {
+      let token = req.headers.authorization
+      const user = await tokenizer.verifyToken(token)
+      if (!user) throw ({ message: 'User not authorized', status: 401 })
+
+      const history = await calculatorService.GetHistoryByUser(userId)
+
+      token = await tokenizer.signToken(token) // refresh token
+      return sendSuccess({ history, token }, 'history fetched successfully')
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
+
+  /**
+   * @function getSomeHistory - Get a limited number of calculations
+   * @implements - calculatorService.GetSomeHistory
+   * @param limit - number of calculations to fetch
+   * @param skip - number of calculations to skip
+   * @return {Promise<object>} - calculations jsoned object
+   */
+  @Example({ limit: 10, skip: 0 })
+  @Get('get-some-history')
+  @Example<FetchResponse>(fetchResponse)
+  @Response(201, 'history fetched successfully')
+  public async getSomeHistory(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Request() req: any,
+    @Query() limit: number,
+    @Query() skip: number
+  ): Promise<any> {
+    try {
+      let token = req.headers.authorization
+      const user = await tokenizer.verifyToken(token)
+      if (!user) throw ({ message: 'User not authorized', status: 401 })
+
+      const history = await calculatorService.GetSomeHistory(limit, skip)
+
+      token = await tokenizer.signToken(token) // refresh token
+      return sendSuccess({ history, token }, 'history fetched successfully')
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
+
+
 }
 
 //export the controller
