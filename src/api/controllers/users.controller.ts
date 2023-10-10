@@ -101,6 +101,88 @@ export class userController extends Controller {
     }
   }
 
+  /**
+   * @function Logout a user
+   * @implements userService.Logout
+   * @param email user email
+   * @return {Promise<object>} user profile jsoned object
+   */
+  @Example({
+    email: 'john@doe.com'
+  })
+  @Post('logout')
+  @Example<IUserSuccessResponse>(userResponse)
+  @Response(201, 'user logged out successfully')
+  public async logout(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Body() payload: IUserPayload
+  ): Promise<any> {
+    try {
+      validations.isValidEmail(payload.email) // validate the payload
+      
+      const user = await userService.Logout(payload)
+      return sendSuccess(user, 'user logged out successfully' )
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
+
+  /**
+   * @function Change password for a user
+   * @implements userService.ChangePassword
+   * @param email user email
+   * @param password user password
+   * @return {Promise<object>} user profile jsoned object
+   */
+  @Example<IUserPayload>(userPayload)
+  @Patch('change-password')
+  @Example<IUserSuccessResponse>(userResponse)
+  @Response(201, 'password changed successfully')
+  public async changePassword(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Body() payload: IUserPayload,
+    @Request() req: any,
+  ): Promise<any> {
+    let token = req.headers.authorization
+    const user = await tokenizer.verifyToken(token)
+    if(!user) throw ({ message: 'User not authorized', status: 401 })
+
+    try {
+      validations.isValidEmail(payload.email) // validate the payload
+
+      const updatedUser = await userService.ChangePassword(payload, user.userId)
+      token = await tokenizer.refreshToken(token)
+      return sendSuccess({ ...updatedUser, token }, 'password changed successfully' )
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
+
+  /**
+   * @function Get all users
+   * @implements userService.GetAll
+   * @return {Promise<object>} users jsoned object
+   */
+  @Get('get-all')
+  @Example<IFetchUsers>(fetchUsersResponse)
+  @Response(201, 'users fetched successfully')
+  public async getAll(
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Request() req: any,
+  ): Promise<any> {
+    try {
+      let token = req.headers.authorization.split(' ')[1]
+      const user = await tokenizer.verifyToken(token)
+      if(!user) throw ({ message: 'User not authorized', status: 401 })
+
+      const users = await userService.GetAll()
+
+      token = await tokenizer.refreshToken(token) // refresh token
+      return sendSuccess({ users, token }, 'users fetched successfully')
+    } catch (err: any) {
+      return sendError(sendResponse, err)
+    }
+  }
 
 }
 
