@@ -3,6 +3,11 @@ export interface IUserPayload {
   password: string;
   name?: string;
 }
+
+interface IRegisterPayload extends IUserPayload {
+  repeatPassword: string;
+}
+
 interface ILoginPayload {
   email: string;
   password: string;

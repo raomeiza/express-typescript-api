@@ -4,7 +4,7 @@ import tokenizer from '../../utils/tokenizer'
 import * as validations from '../validations/user.validation'
 //@ts-ignore
 import { Route, Res, Request,  Patch, Get, TsoaResponse, Delete, Header, Body, Response, Tags, Example, Controller, Post } from 'tsoa'
-import { IUserPayload, IUserData, IUserSuccessResponse, IFetchUsers, ILoginPayload } from '../../interface/user'
+import { IUserPayload, IUserData, IUserSuccessResponse, IFetchUsers, ILoginPayload, IRegisterPayload } from '../../interface/user'
 
 const userData:IUserData = {
     "email": "john@doe.com",
@@ -24,6 +24,8 @@ const loginPayload: IUserPayload = {
   email: 'john@doe.com',
   password: '12345'
 }
+
+const registerPaload: IRegisterPayload = { ...userPayload, repeatPassword: '12345'}
 
 const userResponse: IUserSuccessResponse = {
   success: true,
@@ -63,7 +65,7 @@ export class userController extends Controller {
   @Response(201, 'user registered successfully')
   public async register(
     @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
-    @Body() payload: IUserPayload 
+    @Body() payload: IRegisterPayload, 
   ): Promise<any> {
     try {
       validations.register(payload) // validate the payload

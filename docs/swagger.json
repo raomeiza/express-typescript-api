@@ -29,6 +29,29 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"IRegisterPayload": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"repeatPassword": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password",
+					"repeatPassword"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"IUserPayload": {
 				"properties": {
 					"email": {
@@ -876,7 +899,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/IUserPayload"
+								"$ref": "#/components/schemas/IRegisterPayload"
 							}
 						}
 					}

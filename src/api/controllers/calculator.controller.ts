@@ -41,7 +41,7 @@ export class calculatorController extends Controller {
     @Request() req: any,
   ): Promise<any> {
     try {
-      let token = req.headers.authorization
+      let token = req.headers.authorization.split(' ')[1]
       const user = await tokenizer.verifyToken(token)
       if (!user) throw ({ message: 'User not authorized', status: 401 })
 
@@ -49,7 +49,7 @@ export class calculatorController extends Controller {
 
       const entry = await calculatorService.Save(payload)
 
-      token = await tokenizer.signToken(token) // refresh token
+      token = await tokenizer.refreshToken(token) // refresh token
       return sendSuccess({ ...entry, token }, 'user registered successfully')
     } catch (err: any) {
       return sendError(sendResponse, err)
@@ -70,13 +70,13 @@ export class calculatorController extends Controller {
     @Request() req: any,
   ): Promise<any> {
     try {
-      let token = req.headers.authorization
+      let token = req.headers.authorization.split(' ')[1]
       const user = await tokenizer.verifyToken(token)
       if (!user) throw ({ message: 'User not authorized', status: 401 })
 
       const history = await calculatorService.GetHistory()
 
-      token = await tokenizer.signToken(token) // refresh token
+      token = await tokenizer.refreshToken(token) // refresh token
       return sendSuccess({ history, token }, 'history fetched successfully')
     } catch (err: any) {
       return sendError(sendResponse, err)
@@ -99,13 +99,13 @@ export class calculatorController extends Controller {
     @Query() userId: string
   ): Promise<any> {
     try {
-      let token = req.headers.authorization
+      let token = req.headers.authorization.split(' ')[1]
       const user = await tokenizer.verifyToken(token)
       if (!user) throw ({ message: 'User not authorized', status: 401 })
 
       const history = await calculatorService.GetHistoryByUser(userId)
 
-      token = await tokenizer.signToken(token) // refresh token
+      token = await tokenizer.refreshToken(token) // refresh token
       return sendSuccess({ history, token }, 'history fetched successfully')
     } catch (err: any) {
       return sendError(sendResponse, err)
@@ -130,13 +130,13 @@ export class calculatorController extends Controller {
     @Query() skip: number
   ): Promise<any> {
     try {
-      let token = req.headers.authorization
+      let token = req.headers.authorization.split(' ')[1]
       const user = await tokenizer.verifyToken(token)
       if (!user) throw ({ message: 'User not authorized', status: 401 })
 
       const history = await calculatorService.GetSomeHistory(limit, skip)
 
-      token = await tokenizer.signToken(token) // refresh token
+      token = await tokenizer.refreshToken(token) // refresh token
       return sendSuccess({ history, token }, 'history fetched successfully')
     } catch (err: any) {
       return sendError(sendResponse, err)

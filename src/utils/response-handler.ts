@@ -7,7 +7,7 @@ const sendSuccess = (data: any, message = 'success', code = 200) => {
     message,
     data,
   };
-  return JSON.stringify(resp);
+  return resp;
 };
 
 // Error message handler and custom message for special error

@@ -1,4 +1,4 @@
-import { IUserPayload } from '../../interface/user'
+import { IRegisterPayload, IUserPayload } from '../../interface/user'
 
 // error messages and their status code
 const shortPasswordError = {message: 'Password must be at least 6 characters', status: 400};
@@ -8,7 +8,7 @@ const invalidEmailErrror = {message: 'Invalid email', status: 400}
 const invalidNameError = {message: 'Invalid name format', status: 400}
 const passwordRequiredError = {message: 'Password is requierd', status: 400}
 
-export const register = (user: IUserPayload) => {
+export const register = (user: IRegisterPayload) => {
 
     if (!user.name) {
         throw nameRequiredError;
@@ -22,6 +22,12 @@ export const register = (user: IUserPayload) => {
         throw invalidEmailErrror
     }
     
+    if (!user.repeatPassword) {
+        throw passwordRequiredError
+    } else if (user.password !== user.repeatPassword) {
+        throw {message: 'Passwords do not match', status: 400}
+    }
+
     if (!user.password) {
         throw passwordRequiredError
     } else if (user.password.length < 6) {

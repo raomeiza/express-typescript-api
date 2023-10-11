@@ -49,6 +49,11 @@ export class Token {
     try {
       // verify the token using the secret key
       const decoded = jwt.verify(token, JWT_SECRET_KEY);
+      // delete the iat and exp properties from the decoded token
+      //@ts-ignore
+      delete decoded.iat;
+      //@ts-ignore
+      delete decoded.exp;
       // re encode the token and attach it to the request header
       return jwt.sign(decoded, JWT_SECRET_KEY, { expiresIn: '1h' });
     }

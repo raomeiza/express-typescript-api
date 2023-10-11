@@ -22,6 +22,17 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IRegisterPayload": {
+        "dataType": "refObject",
+        "properties": {
+            "email": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "name": {"dataType":"string"},
+            "repeatPassword": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IUserPayload": {
         "dataType": "refObject",
         "properties": {
@@ -157,7 +168,7 @@ export function RegisterRoutes(app: Router) {
             function userController_register(request: any, response: any, next: any) {
             const args = {
                     sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
-                    payload: {"in":"body","name":"payload","required":true,"ref":"IUserPayload"},
+                    payload: {"in":"body","name":"payload","required":true,"ref":"IRegisterPayload"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
