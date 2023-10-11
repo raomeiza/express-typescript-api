@@ -10,7 +10,7 @@
     "build-docs": "tsoa spec",
     "build-routes": "tsoa routes",
     "build-tsoa": "tsoa spec && tsoa routes",
-    "build": "tsoa spec && tsoa routes && tsc"
+    "build": "tsc"
   },
   "author": "Abdulraheem A omeiza",
   "license": "ISC",
@@ -27,8 +27,7 @@
     "mongoose": "^6.3.1",
     "supertest": "^6.3.3",
     "swagger-jsdoc": "^6.2.1",
-    "swagger-ui-express": "^4.3.0",
-    "tsoa": "^5.0.0"
+    "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -36,6 +35,7 @@
     "@types/swagger-ui-express": "^4.1.3",
     "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0" ,   "tsoa": "^5.0.0"
+
   }
 }
