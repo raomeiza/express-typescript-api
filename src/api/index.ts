@@ -19,6 +19,7 @@ InitiateMongoServer();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({
   verify: (req, res, buf) => {
+    //@ts-ignore
     req.rawBody = buf.toString();
   }
 },
