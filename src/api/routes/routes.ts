@@ -3,21 +3,20 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute, HttpStatusCodeLiteral, TsoaResponse, fetchMiddlewares } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { calculatorController } from './../controllers/calculator.controller';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { userController } from './../controllers/users.controller';
 import type { RequestHandler, Router } from 'express';
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "ICalculator": {
+    "IErrorResponse": {
         "dataType": "refObject",
         "properties": {
-            "user": {"dataType":"string"},
-            "expression": {"dataType":"string","required":true},
-            "result": {"dataType":"string","required":true},
-            "timestamp": {"dataType":"datetime"},
+            "success": {"dataType":"enum","enums":[false],"required":true},
+            "message": {"dataType":"string","required":true},
+            "error": {"dataType":"object","required":true},
+            "code": {"dataType":"double","required":true},
+            "errorStack": {"dataType":"any"},
         },
         "additionalProperties": false,
     },
@@ -53,121 +52,13 @@ export function RegisterRoutes(app: Router) {
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.post('/calculator/save',
-            ...(fetchMiddlewares<RequestHandler>(calculatorController)),
-            ...(fetchMiddlewares<RequestHandler>(calculatorController.prototype.save)),
-
-            function calculatorController_save(request: any, response: any, next: any) {
-            const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
-                    payload: {"in":"body","name":"payload","required":true,"ref":"ICalculator"},
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new calculatorController();
-
-
-              const promise = controller.save.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/calculator/get-history',
-            ...(fetchMiddlewares<RequestHandler>(calculatorController)),
-            ...(fetchMiddlewares<RequestHandler>(calculatorController.prototype.getHistory)),
-
-            function calculatorController_getHistory(request: any, response: any, next: any) {
-            const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new calculatorController();
-
-
-              const promise = controller.getHistory.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/calculator/get-history-by-user',
-            ...(fetchMiddlewares<RequestHandler>(calculatorController)),
-            ...(fetchMiddlewares<RequestHandler>(calculatorController.prototype.getHistoryByUser)),
-
-            function calculatorController_getHistoryByUser(request: any, response: any, next: any) {
-            const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    userId: {"in":"query","name":"userId","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new calculatorController();
-
-
-              const promise = controller.getHistoryByUser.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/calculator/get-some-history',
-            ...(fetchMiddlewares<RequestHandler>(calculatorController)),
-            ...(fetchMiddlewares<RequestHandler>(calculatorController.prototype.getSomeHistory)),
-
-            function calculatorController_getSomeHistory(request: any, response: any, next: any) {
-            const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
-                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    limit: {"in":"query","name":"limit","required":true,"dataType":"double"},
-                    skip: {"in":"query","name":"skip","required":true,"dataType":"double"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = getValidatedArgs(args, request, response);
-
-                const controller = new calculatorController();
-
-
-              const promise = controller.getSomeHistory.apply(controller, validatedArgs as any);
-              promiseHandler(controller, promise, response, undefined, next);
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/user/register',
             ...(fetchMiddlewares<RequestHandler>(userController)),
             ...(fetchMiddlewares<RequestHandler>(userController.prototype.register)),
 
             function userController_register(request: any, response: any, next: any) {
             const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
+                    sendResponse: {"in":"res","name":"401","required":true,"ref":"IErrorResponse"},
                     payload: {"in":"body","name":"payload","required":true,"ref":"IRegisterPayload"},
             };
 
@@ -219,7 +110,7 @@ export function RegisterRoutes(app: Router) {
 
             function userController_logout(request: any, response: any, next: any) {
             const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
+                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}}},
                     payload: {"in":"body","name":"payload","required":true,"ref":"IUserPayload"},
             };
 
@@ -272,7 +163,7 @@ export function RegisterRoutes(app: Router) {
 
             function userController_getAll(request: any, response: any, next: any) {
             const args = {
-                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"resp":{"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}},"required":true}}},
+                    sendResponse: {"in":"res","name":"401","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"any","required":true},"message":{"dataType":"string","required":true},"success":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":[true]},{"dataType":"enum","enums":[false]}],"required":true}}},
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
             };
 

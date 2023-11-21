@@ -12,7 +12,7 @@ export class userService {
 
     return await getResponse(newUser)
     } catch (err: any) {
-      throw ({ message: err.message || 'user not created', error: err, status: 404 })
+      throw ({ message: err.message || 'user not created', error: err, status: 500 })
     }
   }
 

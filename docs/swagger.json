@@ -6,25 +6,33 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"ICalculator": {
+			"IErrorResponse": {
 				"properties": {
-					"user": {
+					"success": {
+						"type": "boolean",
+						"enum": [
+							false
+						],
+						"nullable": false
+					},
+					"message": {
 						"type": "string"
 					},
-					"expression": {
-						"type": "string"
+					"error": {
+						"additionalProperties": false,
+						"type": "object"
 					},
-					"result": {
-						"type": "string"
+					"code": {
+						"type": "number",
+						"format": "double"
 					},
-					"timestamp": {
-						"type": "string",
-						"format": "date-time"
-					}
+					"errorStack": {}
 				},
 				"required": [
-					"expression",
-					"result"
+					"success",
+					"message",
+					"error",
+					"code"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -87,660 +95,6 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/calculator/save": {
-			"post": {
-				"operationId": "Save",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {},
-								"examples": {
-									"Example 1": {
-										"value": {
-											"userId": "6142b4a3b0d7f4f8a7f8b7f6",
-											"expression": "1+1",
-											"result": 2
-										}
-									},
-									"Example 2": {
-										"value": {
-											"success": true,
-											"message": "calculation saved successfully",
-											"data": [
-												{
-													"expression": "1+1",
-													"result": "2",
-													"timestamp": "2021-09-15T17:07:15.000Z",
-													"id": "6142b4a3b0d7f4f8a7f8b7f6"
-												}
-											],
-											"token": "token"
-										}
-									}
-								}
-							}
-						}
-					},
-					"201": {
-						"description": "calculation saved successfully"
-					},
-					"400": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"500": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"CALCULATOR"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/ICalculator"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/calculator/get-history": {
-			"get": {
-				"operationId": "GetHistory",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {},
-								"examples": {
-									"Example 1": {
-										"value": {}
-									},
-									"Example 2": {
-										"value": {
-											"success": true,
-											"message": "calculation saved successfully",
-											"data": [
-												{
-													"expression": "1+1",
-													"result": "2",
-													"timestamp": "2021-09-15T17:07:15.000Z",
-													"id": "6142b4a3b0d7f4f8a7f8b7f6"
-												}
-											],
-											"token": "token"
-										}
-									}
-								}
-							}
-						}
-					},
-					"201": {
-						"description": "history fetched successfully"
-					},
-					"400": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"500": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"CALCULATOR"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/calculator/get-history-by-user": {
-			"get": {
-				"operationId": "GetHistoryByUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {},
-								"examples": {
-									"Example 1": {
-										"value": {
-											"userId": "6142b4a3b0d7f4f8a7f8b7f6"
-										}
-									},
-									"Example 2": {
-										"value": {
-											"success": true,
-											"message": "calculation saved successfully",
-											"data": [
-												{
-													"expression": "1+1",
-													"result": "2",
-													"timestamp": "2021-09-15T17:07:15.000Z",
-													"id": "6142b4a3b0d7f4f8a7f8b7f6"
-												}
-											],
-											"token": "token"
-										}
-									}
-								}
-							}
-						}
-					},
-					"201": {
-						"description": "history fetched successfully"
-					},
-					"400": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"500": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"CALCULATOR"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"description": "- user id",
-						"in": "query",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/calculator/get-some-history": {
-			"get": {
-				"operationId": "GetSomeHistory",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {},
-								"examples": {
-									"Example 1": {
-										"value": {
-											"limit": 10,
-											"skip": 0
-										}
-									},
-									"Example 2": {
-										"value": {
-											"success": true,
-											"message": "calculation saved successfully",
-											"data": [
-												{
-													"expression": "1+1",
-													"result": "2",
-													"timestamp": "2021-09-15T17:07:15.000Z",
-													"id": "6142b4a3b0d7f4f8a7f8b7f6"
-												}
-											],
-											"token": "token"
-										}
-									}
-								}
-							}
-						}
-					},
-					"201": {
-						"description": "history fetched successfully"
-					},
-					"400": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"401": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					},
-					"500": {
-						"description": "",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"CALCULATOR"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"description": "- number of calculations to fetch",
-						"in": "query",
-						"name": "limit",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"description": "- number of calculations to skip",
-						"in": "query",
-						"name": "skip",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
 		"/user/register": {
 			"post": {
 				"operationId": "Register",
@@ -776,41 +130,12 @@
 							}
 						}
 					},
-					"201": {
-						"description": "user registered successfully"
-					},
 					"400": {
 						"description": "",
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -820,33 +145,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
@@ -856,39 +155,13 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
-										}
-									},
-									"required": [
-										"resp"
-									],
-									"type": "object"
+									"$ref": "#/components/schemas/IErrorResponse"
 								}
 							}
 						}
 					}
 				},
-				"description": "Used for user registratiion.\r\nSupply the user's name, unique email and password",
+				"description": "Used for user registratiion.\nSupply the user's name, unique email and password",
 				"tags": [
 					"USER"
 				],
@@ -1111,30 +384,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}
@@ -1147,30 +412,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}
@@ -1183,30 +440,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}
@@ -1425,39 +674,28 @@
 							}
 						}
 					},
-					"201": {
-						"description": "users fetched successfully"
-					},
 					"400": {
 						"description": "",
 						"content": {
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}
@@ -1470,30 +708,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}
@@ -1506,30 +736,22 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"resp": {
-											"properties": {
-												"data": {},
-												"message": {
-													"type": "string"
-												},
-												"success": {
-													"type": "boolean",
-													"enum": [
-														true,
-														false
-													]
-												}
-											},
-											"required": [
-												"data",
-												"message",
-												"success"
-											],
-											"type": "object"
+										"data": {},
+										"message": {
+											"type": "string"
+										},
+										"success": {
+											"type": "boolean",
+											"enum": [
+												true,
+												false
+											]
 										}
 									},
 									"required": [
-										"resp"
+										"data",
+										"message",
+										"success"
 									],
 									"type": "object"
 								}

@@ -1,4 +1,4 @@
-import { sendError, sendSuccess } from '../../utils/response-handler'
+import { IErrorResponse, sendError, sendSuccess } from '../../utils/response-handler'
 import userService from '../services/user.services'
 import tokenizer from '../../utils/tokenizer'
 import * as validations from '../validations/user.validation'
@@ -62,16 +62,16 @@ export class userController extends Controller {
   @Example<IUserPayload>(userPayload)
   @Post('register')
   @Example<IUserSuccessResponse>(userResponse)
-  @Response(201, 'user registered successfully')
+  @Response(200, 'user registered successfully 2')
   public async register(
-    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, IErrorResponse>,
     @Body() payload: IRegisterPayload, 
   ): Promise<any> {
     try {
       validations.register(payload) // validate the payload
       const user = await userService.Register(payload)
       let token = await tokenizer.signToken(user)
-      return await sendSuccess({ ...user, token }, 'user registered successfully' )
+      return await sendSuccess({ ...user, token }, 'user registered successfully', 201)
     } catch (err: any) {
       return sendError(sendResponse, err)
     }
@@ -116,7 +116,7 @@ export class userController extends Controller {
   @Example<IUserSuccessResponse>(userResponse)
   @Response(201, 'user logged out successfully')
   public async logout(
-    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { success: true | false, message: string, data: any }>,
     @Body() payload: IUserPayload
   ): Promise<any> {
     try {
@@ -167,9 +167,9 @@ export class userController extends Controller {
    */
   @Get('get-all')
   @Example<IFetchUsers>(fetchUsersResponse)
-  @Response(201, 'users fetched successfully')
+  @Response(200, 'users fetched successfully')
   public async getAll(
-    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { resp: { success: true | false, message: string, data: any } }>,
+    @Res() sendResponse: TsoaResponse<400 | 500 | 401, { success: true | false, message: string, data: any }>,
     @Request() req: any,
   ): Promise<any> {
     try {
